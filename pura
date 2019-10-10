@@ -1,0 +1,32 @@
+#!/bin/sh
+echo  " what is his name? " 
+read _NAME
+_COUNT=0
+
+while :
+
+do
+	if [[ $_COUNT -ge $1 ]]; then
+	break
+        fi
+
+
+cat << TE
+
+      /\\
+     /..\\
+     L   >
+      \  |
+      /  /
+      \ /
+      |/
+      V
+
+   僕は$_NAME   
+
+TE
+_COUNT=`expr $_COUNT+1`
+
+done
+
+exit
