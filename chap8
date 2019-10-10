@@ -1,0 +1,28 @@
+#!/bin/sh
+
+function _getYESorNO(){
+	unset _ANS
+
+	while [ ! "$_ANS" ]; do
+	echo  "please input (yes/no):"
+	read _ANS
+
+	case "$_ANS" in
+	 [yY] | [Yy][Ee][Ss]) _ANS="yes";;
+	 [nN] | [Nn][Oo])     _ANS="no";;
+	*)
+
+	echo "[error] Bad value."
+	unset _ANS
+	;;
+	
+	esac
+	done
+}
+
+echo "Do you like puranaria?"
+_getYESorNO
+echo "Your answer-> $_ANS"
+
+exit
+
