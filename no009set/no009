@@ -29,8 +29,9 @@ if [ -z "$date_str" ]; then
 	exit
 fi
 
-
-rm  ${LOG_DIR}/$date_str.log
+#指定した日付のログファイルがあれば削除の確認をされる
+#-iオプションで削除前に確認．yを入力する．
+rm -i  ${LOG_DIR}/$date_str.log
 
 #テンポラリファイルを削除する
 rm -f cal.tmp
