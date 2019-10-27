@@ -1,0 +1,24 @@
+#!/bin/bash
+
+count=0
+
+
+#trap 'コマンド' [シグナル名]
+#trap=シグナル=実行中のプロセスに対して様々な動作を指示する 
+#INTシグナルを受け取った場合，''の中を実行
+
+trap '  echo
+        echo "Try count: $count"
+        exit  '  INT
+
+#curl [options] [URL]
+#curl=サーバへデータ転送を行うコマンド．FTP,SFTP,TELNETLDAPなど様々な通信プロトコルに対応している
+#無限ループ データ転送をctl+C（シグナル発生）が入力されるまで無限に行う
+
+while :
+do
+	curl -o /dev/null $1
+	count=$(expr $count + 1)
+        sleep 1
+done
+
