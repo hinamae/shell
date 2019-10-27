@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#端末情報を保存
+#コマンド置換
+#コマンド行をバッククォーテーションで囲むとその部分はコマンドが実行された結果に置き換わる=コマンド置換
+tty=`tty`
+
+#doneの直後にリダイレクトを書くことでwhileループ全体にquestion.txtが入力リダイレクトされる．
+#question.txtの内容は_questionとして変数に格納されて一行ずつ処理
+#readコマンドにリダイレクトしている(while read _ question done < question.txt)途中でreadコマンドを実行しようとしても標準入力がファイルになってしまっているため，機能しない
+#そこで，readコマンドに標準入力がファイルとなる前の端末情報をリダイレクトすることによって，プロンプトからのキーボード入力を標準入力として受け取ることができる．
+
+
+
+while read _question
+do
+	echo $_question
+	read _dir < $tty
+	echo "Command: ls $_dir"
+	ls $_dir
+
+done < question.txt
