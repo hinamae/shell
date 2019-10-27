@@ -1,0 +1,15 @@
+#!/bin/bash
+
+
+echo  "Enter your ID:"
+read id
+
+
+#-nオプションで同じ行の中に出力
+echo -n "Enter your name:"
+read name
+
+echo -n "Enter your age:"
+read age
+
+echo "ID: $id name: $name age: $age"
