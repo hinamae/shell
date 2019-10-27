@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo -n "Type your answer [y/n]:"
+
+#現在に端末設定をシェル変数tty_stateにバックアップしてから，
+#端末をraw設定する(raw設定＝キーバッファ処理が行われず，エンターを押さずして，1文字ずつ文字を取得する)
+
+tty_state=$(stty -g)
+
+stty raw
+
+#キーボードから一文字読み込む
+char=$(dd bs=1 count=1 2> /dev/null)
+
+#端末設定を元に戻す
+stty "$tty_state"
+
+echo
+
+#入力された文字により，処理を分岐する
+case "$char" in
+	[yY])
+		echo "yesがINPUTされました"
+		;;
+	[nN})
+		
+		echo "noがINPUTされました"
+		;;
+	*)
+		echo "不明です"
+		;;
+esac
