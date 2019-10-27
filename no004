@@ -1,0 +1,25 @@
+#!/bin/bash
+
+username=whoes_FTP_server_do_you_want_to_connect_with?
+hostname=localhost
+
+echo -n "Password:"
+
+#stty=標準入力デバイスの端末の入出力設定を設定する
+#エコーバックをOFFにする（パスワードを画面に表示させたくないため）
+stty -echo
+read password
+
+#エコーバックをONにする
+stty echo
+
+echo
+
+#入力されたパスワードでftpサーバーからダウンロードをおこなう
+
+#wget[オプション][URL]
+#wget=urlを指定してファイルをダウンロードする
+#-q（クワイエットモード）で余計な出力をさせないように，またパスワードオプションでパスワードを指定，ダウンロード先のホスト名の頭に@つける
+#引数にダウンロードするファイル名を指定
+wget -q --ftp-password="$password" "ftp://${username}@${hostname}/$1"
+
