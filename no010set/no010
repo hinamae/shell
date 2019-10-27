@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DATA_DIR=./datadir
+
+cd $DATA_DIR
+
+tar cf - poster_data.pptx | pv | gzip > archive.tar.gz
