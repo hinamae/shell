@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#引数が整数かどうかチェック
+
+
+#終了ステータスを先のif文で使用している
+#testコマンド自体の出力結果は必要なし(標準出力を/dev/nullへ．つまり捨てている)
+#eqが0と等しいかチェック
+test "$1" -eq 0 2>/dev/null
+
+#この時点での終了ステータス
+#コマンドライン引数が0と等しければ0
+#コマンドライン引数が0 と違う数値なら1
+#コマンドライン引数が0と比較できない文字列などならば2
+
+if [ $? -lt 2 ]; then
+	echo "Argument is Integer"
+	expr 10 + $1
+else
+	echo "Argument is not Integer."
+	exit 1
+fi
