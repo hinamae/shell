@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#:=の記法は，変数名が設定されているかをチェックして，値を代入する記法
+#
+cp pv-1.4.12.tar.gz  ${TMPDIR:=/tmp}
+
+#
+cd $TMPDIR
+tar xzf pv-1.4.12.tar.gz
+
+echo "Extract files to $ TMPDIR."
+
