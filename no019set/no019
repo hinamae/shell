@@ -1,0 +1,5 @@
+#!/bin/bash
+
+today="20191028"
+#シェル変数todayを正しく展開する
+wc -l ${today}_log
