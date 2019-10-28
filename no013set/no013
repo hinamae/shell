@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+#index.htmlからhrefタグで囲まれたものを抽出
+
+#クォート部分(エスケープが必要)
+quote="[\"']"
+
+#href属性部分
+match="[^\"']*"
+
+#while read line構文で一行ずつ読み込む
+while read line
+do
+
+	#expr は計算だけでなく，正規表現を利用して変数内の文字列からマッチする部分を取り出すこともできる
+	href=$(expr "$line" : ".*href=${quote}\(${match}\)${quote}.*")
+
+#$?は特殊変数
+#$?はコマンドの終了状態を返すi
+#$?は正常終了は0を返す
+if [ $? -eq 0 ]; then
+	echo $href
+fi
+
+done < index.html
