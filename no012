@@ -1,0 +1,23 @@
+#!/bin/bash
+
+DIR=/var/tmp
+
+#関数定義
+#homeディレクトリ直下の引数$1で指定したディレクトリ内(今回は~/documents)のリストを表示
+
+ls_home()
+{
+	#変数DIRを関数内のローカル変数として定義
+	#localとつけていなった場合，DIRという変数名が被っているため，上書きされてしまう
+	local DIR
+	
+	DIR=~/$1
+	echo "directory: $DIR"
+	ls $DIR
+
+}
+
+ls_home documents
+
+echo "directory: $DIR"
+ls $DIR
