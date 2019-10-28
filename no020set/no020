@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#ログファイル探索
+#コマンド置換（コマンドの出力に置き換えること）を行う際に$()を使用している
+err_count=$(grep -c "ERROR" $HOME/documents/unix_lessons/test/no020set/$(hostname).log)
+
+echo "Error counts: $err_count"
