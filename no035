@@ -1,0 +1,10 @@
+#!/bin/bash
+
+username="user1"
+server="192.168.1.5"
+
+#まずtarアーカイブを標準出力に表示
+#パイプで受け取りとる
+#シェル変数serverでしていされたリモートホスト上でこのパイプの中身をキャットし，それをリダイレクトでtarファイルとして出力する
+
+tar cvf - myapp/log | ssh ${username}@${server} "cat > /backup/myapplog.tar"
