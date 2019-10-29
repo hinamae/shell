@@ -1,0 +1,21 @@
+#!/bin/bash
+
+
+targetdir="$HOME/documents/unix_lessons/test"
+
+#ファイル数を数える(サブディレクトリのファイルはかぞえない)
+#find[対象パス][式]
+#-nameオプション=ファイル名を指定する
+#-typeオプション=ファイルの種別を指定する(fは通常ファイル.dはディレクトリ)
+#-maxdepthオプション=深さをしてい．1だと直下のみ．
+#wc = テキストの行数文字数を数える
+#-lオプション=行数を取得する
+
+filecount=$(find "$targetdir" -maxdepth 1 -type f -print | wc -l)
+dircount=$(find "$targetdir" -maxdepth 1 -type d -print | wc -l)
+
+dircount=$(expr $dircount - 1)
+
+echo "対象ディレクトリ：$targetdir"
+echo "ファイル数：$filecount"
+echo "ディレクトリ数:$dircount"
