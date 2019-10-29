@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#ファイルのタイムスタンプを変更する
+#テストデータの作成などでよく使用する
+
+#UNIXのタイムスタンプの仕組み
+#3つある
+#1.atime=最終アクセス時刻(acess time)
+#2.mtime=最終修正時刻(modify time)
+#3.ctime=最終状態変更時刻(change time)
+
+
+#[yyyymmddhhmm.ss]として[年月日時分秒]を指定
+timestamp="201311190123.45"
+
+#ファイルのタイムスタンプ更新
+#-tオプションをつけることでタイムスタンプを更新
+#atimeとmtimeを更新する
+touch -t $timestamp app1.log
+ 
+#-cオプション=同様のファイル名のファイルが存在する場合は新規作成しない
+#ロックファイル=アクセスを一人に制限しているファイル
+touch -c -t  $timestamp  lock.tmp
