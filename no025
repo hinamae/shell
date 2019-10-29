@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#カッコ内はサブシェルとなるため，ディレクトリ移動はこの中だけに影響する
+
+#サブシェルで定義された変数名なども親シェルのほうに影響を与えない
+(
+	echo "Archive: /var/tmp/archive.tar"
+	cd /var/tmp
+	#cvfオプション=アーカイブする
+	#*.txtのファイルをまとめてarchive.tarとしてアーカイブ
+	tar cvf archive.tar *.txt
+
+)
+
+#スクリプト実行時のカレントディレクトリ内で処理
+echo "Start: no003"
+./no003
