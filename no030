@@ -1,0 +1,6 @@
+#!/bin/bash
+
+logdir="/var/log"
+
+#4日前から1日前までに更新されたファイル一覧を表示する
+find $logdir -name "*.log" -mtime -4 -mtime +0  -print
