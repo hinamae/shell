@@ -1,0 +1,10 @@
+#!/bin/bash
+
+#年月でアーカイブファイルを指定
+archivefile="$(date +'%Y%m').tar"
+
+#今日の日付からログファイルを指定
+logfile="$(date +'%Y%m%d').log"
+
+#月次アーカイブに今日のログを追加
+tar rvf $archivefile $logfile
