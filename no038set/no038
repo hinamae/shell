@@ -1,0 +1,5 @@
+#!/bin/bash
+
+
+#tarコマンドでアーカイブファイルを作成する際，.svnや.gitディレクトリなど特定のファイルディレクトリを除外する
+tar cvf archive.tar --exclude ".svn" myapp
