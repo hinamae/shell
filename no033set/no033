@@ -1,0 +1,15 @@
+#!/bin/bash
+
+config="myapp.conf"
+
+
+
+bak_filename="${config}.$(date '+%Y%m%d')"
+
+#すでにmyapp.conf.20131202などがあった場合は秒まで入れて
+#バックアップファイルを作成する
+if [ -e "bak_filename" ]; then
+	bak_filename="${config}.$(date '+%Y%m%d%H%M.%S')"
+fi
+
+cp -v "$config" "$bak_filename"
