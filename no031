@@ -1,0 +1,5 @@
+#!/bin/bash
+
+logdir="/var/log"
+
+find $logdir -name "*.log" -mtime +364 -print | xargs ls
