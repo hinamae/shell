@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#htmlファイルのタイトル部分のみとりだして，outputに出力
+
+#カレントディレクトリの.htmlファイルを対象
+#htmlファイルごとにoutput内のフォルダ分けもしたい
+for htmlfile in *.html
+do
+	#ファイル名から，拡張子を含まない文字列を取得する
+	filename=$(basename $htmlfile .html)
+
+	#<title>タグの中身を後方参照\1として抽出し，ファイル出力する
+	sed -n "s/^.*<title>\(.*\)<\/title>.*$/\1/p" $htmlfile > output/${filename}.txt
+
+done
