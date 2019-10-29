@@ -2,4 +2,7 @@
 
 logdir="/var/log"
 
-find $logdir -name "*.log" -mtime +364 -print | xargs ls
+#xargs=標準入力やファイルからリストを読み込み，コマンドラインを作成して実行する
+#xargs[オプション]コマンド[コマンドの引数]
+#1年以上更新のないファイルを削除
+find $logdir -name "*.log" -mtime +364 -print | xargs rm -fv
