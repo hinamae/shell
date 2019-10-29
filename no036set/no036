@@ -1,0 +1,14 @@
+#!/bin/bash
+
+logdir="/$HOME/documents/unix_lessons/test/no036set"
+
+cd "$logdir"
+#ディレクトリ内のログファイルを
+#パスワードつきzipでアーカイブする
+#zip[オプション]<zipファイル><対象ファイル>
+#-e エンクリプトオプション
+#-r ディレクトリ内を再帰的に処理
+
+zip -e -r log.zip log
+
+
