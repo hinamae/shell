@@ -1,0 +1,14 @@
+#!/bin/bash
+
+log_dir="/$HOME/documents/unix_lessons/test/no034set/log"
+backup_dir="/$HOME/documents/unix_lessons/test/no034set/backup"
+
+#"/$HOME/documents/unix_lessons/test/no034set/logの中のログファイルを
+#"/$HOME/documents/unix_lessons/test/no034set/backup/logの中のログファイルにコピーする
+#rsync[オプション]<コピーもと><コピー先>
+
+#rsync=sync（同期）するために使用されるコマンド
+#コピー時にコピー元とコピー先の差分を元に変更のあったファイルのみコピーするため効率的
+rsync -av "$log_dir" "$backup_dir"
+
+
