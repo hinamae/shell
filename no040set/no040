@@ -1,0 +1,21 @@
+#!/bin/bash
+
+backup_dir="$HOME/desktop/unix_lessons/test/no040set"
+
+#myappディレクトリを$backup_dir下にバックアップコピー
+
+#getopts=オプション指定ができる
+
+while getopts "a" option
+do
+	case $option in
+	 a)
+	
+	 cp -a myapp "backup_dir"
+	 exit
+	 ;;
+	esac
+done
+
+cp -R myapp "$backup_dir"
+	
