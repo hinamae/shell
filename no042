@@ -1,0 +1,17 @@
+#!/bin/bash
+
+start_command="./no003"
+
+
+#実行前に正常動作できることを確認してから実行する
+
+if [ -x "$start_command" ]; then
+
+	$start_command
+
+else
+
+	echo "ERROR: -x $start_command failed." >&2
+	exit 1
+
+fi
