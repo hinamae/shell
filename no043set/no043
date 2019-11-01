@@ -1,0 +1,36 @@
+#!/bin/bash
+
+#新旧を比較する対象ファイル
+log1="../no003"
+log2="../no007"
+
+#引数のファイルが存在するか調べ存在しない場合は終了する
+
+filecheck()
+{	#ファイルが存在しない場合
+	if [ ! -e "$1" ]; then
+		
+		標準入力ではなく標準エラー出力として出力する
+		echo "ERROR: File $1 does not exist." >&2
+		
+		#終了ステータスを規定
+		#１は異常終了
+		exit 1;
+	fi
+}
+
+filecheck "$log1"
+filecheck "$log2"
+
+#二つのファイルの新旧を調べ，古い方をコピーする
+
+if [ "$log1" -nt "$log2" ]; then
+	echo "[$log1]->newer,[$log2]->older"
+	cp $log2 ./new2
+
+else
+	echo "[$log2]->newer,[$log1]->older"
+	cp $log1 ./new1
+
+fi
+
