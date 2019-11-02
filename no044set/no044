@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#比べる二つのディレクトリ名
+
+dirA="dir1"
+dirB="dir2"
+
+#dir1/とdir2/のファイルリストの差を調べる
+( cd ${dirA}; find . -maxdepth 1 -type f -print | sort ) > tempfile1.list
+( cd ${dirB}; find . -maxdepth 1 -type f -print | sort ) > tempfile2.list
+
+
+#comm=２つのファイルの差分を調べる
+#comm file1 file2
+#一列目：file1にのみ含まれる行を出力
+#二列目：file2にのみ含まれる行を出力
+#三列目：どちらにも含まれる行を出力
+comm tempfile1.list tempfile2.list
+
