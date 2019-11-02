@@ -1,0 +1,26 @@
+#!/bin/bash
+export LANG=C:wq
+
+filename="target.txt"
+
+if [ ! -e "$filename" ]; then
+
+#対象ファイルが存在していなければエラー終了
+#標準エラー出力にリダイレクト
+	echo "ERROR : File not exists. " >&2
+	exit 1
+
+elif [ -h "$filename" ]; then
+
+#対象ファイルがシンボリックリンクなら、readlinkコマンドで実態ファイルに対して、処理を行う
+
+#iオプションによって、シンボリックリンクだけではなく、元ファイルにたいしてもsedにより操作をおこなう
+
+#HelloをHiに書き換える
+
+	sed -i.bak "s/Hello/Hi/g" "$(readlink "$filename")"
+
+else
+	sed -i.bak "s/Hello/Hi/g" "$filename"
+fi
+
