@@ -1,0 +1,25 @@
+#!/bin/bash
+
+#IFSに改行を設定する
+#IFS=Internal Field Separatorシェルが区切り文字として解釈する文字を設定する特殊な変数
+#'
+#'とかくことによって、改行のみを区切り文字として設定している(デフォルトではタブ、スペース、改行が区切り文字として指定されている)
+IFS='
+'
+
+
+#カレントディレクトリ配下のファイルを$filenameとして逆順に処理
+#-Aオプション= カレントディレクトリ配下のファイルを全て表示
+#-Fオプション= ディレクトリとファイルが区別できる(ディレクトリにはディレクトリ名のおわりに/がつく)
+
+for filename in $(ls -AF)
+do
+	case "$filename" in
+	.*/)
+		echo "dot directory: $filename"
+		;;
+	.*)
+		echo "dot file: $filename"
+		;;
+	esac
+done
