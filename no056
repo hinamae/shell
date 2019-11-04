@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#デフォルトゲートウェイへのネットワーク疎通をテストする(Mac用)
+
+#netstat コマンドの出力からデフォルトゲートウェイを取得
+#カラム1が”default”の行のカラム2を取り出す
+#netstatコマンド=TCP/IP通信の各種状態調べる
+#-nオプション=IPアドレス表示(ホスト表示ではなく)
+#-rオプション=現在の経路テーブルを表示することができる
+
+#NR==5を指定してデフォルトゲートウェイのIPアドレスを取得しているのは邪道すぎる
+gateway=$(netstat -nr | awk '$1 == "default" && NR == 5  {print $2}')
+
+#デフォルトゲートウェイにping実行
+ping -c 1 $gateway > /dev/null 2>&1
+
+#pingコマンドの終了ステータスで成功・失敗判断
+if [ $? -eq 0 ]; then
+	echo "[Success] ping -> $gateway"
+else
+	echo "[Failed] ping -> $gateway"
+fi
