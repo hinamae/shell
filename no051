@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#日時表記のテキストから何日差があるか計算したい場合
+
+
+#比較したい2つの日時を変数として定義
+day1="2019/09/30 10:49:49"
+day2="2019/11/01 11:11:11"
+
+
+day1_epoch=$(date -j -f "%Y/%m/%d %H:%M:%S"  "$day1" '+%s')
+day2_epoch=$(date -j -f "%Y/%m/%d %H:%M:%S"  "$day2" '+%s')
+
+
+echo "day1($day1): $day1_epoch"
+echo "day2($day2): $day2_epoch"
+
+#2つの日付のepoch秒を引き算して
+#1日＝24時間=1440分86400秒で割れば何日違うのかを計算できる
+
+echo "day interval"
+
+day_interval=$(expr \( $day1_epoch - $day2_epoch \) / 86400)
+echo $day_interval
+
+
