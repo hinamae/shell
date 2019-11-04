@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#現在うるう年か判断する
+
+#現在の西暦を4桁で取得
+
+year=$(date '+%Y')
+
+
+#西暦を割った余りを計算する
+mod1=$(expr $year % 4 )
+mod2=$(expr $year % 100)
+mod3=$(expr $year % 400)
+
+
+#うるう年かの判断
+if [ $mod1 -eq 0 -a $mod2 -ne 0 -o $mod3 -eq 0 ]; then 
+	echo "leap year $year"
+	
+else
+	echo "not leap year $year"
+
+fi
