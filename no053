@@ -1,0 +1,25 @@
+#!/bin/bash
+
+logdir="$HOME/documents/unix_lessons/test"
+
+
+#今月の15日の日付を取得する
+#どの月においても存在する日付を取得したい（31日など存在しない月もある。）
+
+#thismanth=$(date '+%Y/%m/15 00:00:00')
+
+#先月の日付けをYYYYMMで取得する
+#1month ago は先月の同日を取るため末日とならないよう
+#変数thismonthに15日を指定した。
+
+#last_YYYYMM=$(date -d "$thismonth - 1 month ago" '+%Y%m')
+
+
+#macOSの場合は下記でOK
+
+last_YYYYMM=$(date -v-1m "+%Y%m")
+
+
+#先月のログファイルをまとめてアーカイブ
+#tar[オプション]<アーカイブ><対象ファイル>
+tar cvf ${last_YYYYMM}.tar ${logdir}/access.log-${last_YYYYMM}*
