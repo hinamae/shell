@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#IPアドレスを取得したいホスト名を定義
+
+fqdn="www.google.com"
+
+
+echo "Address of $fqdn"
+echo "============="
+
+
+#hostコマンドでIPアドレスを取得し、awkで加工して出力
+#ipv4アドレスの後にIPv4、ipv6アドレスの後にipv6の文字列を付け加えて出力
+#$NF=フィールド数
+#$NFで最後のフィールドのみ取り出す
+#$NF-nで末尾から数えてn番目のフィールドのみ取り出せる
+host $fqdn | awk '/has address/ {print $NF, "IPv4"} / has IPv6 address/ {print $NF, "IPV6"}'
