@@ -1,0 +1,24 @@
+#!/bin/bash
+
+#ncコマンドを用いて対象サーバのTCPポートの状態を調べ接続できないTCPポート番号をfail-port.logに出力する
+
+ipaddr="192.168.100.1"
+faillog="fail-port.log"
+
+
+#テストするポートは80,2222,8080
+
+
+
+for port in 80 2222 8080
+do 
+
+	#nc=Netcatコマンド、TCP／UDPパケットの作成を行い様々なネットワークテストができる
+	#nc[オプション]<対象ホスト><ポート番号>
+	#-zオプション=3wayハンドシェイクのみを行い、実際のデータ通信はおこなわないオプション
+	#-wオプション=指定した秒数応答がなければタイムアウトする
+	nc -w 5 -z $ipaddr $port
+	if [ $? -ne 0 ]; then
+		echo "Failed at port: $port" >> "$faillog"
+	fi
+done
