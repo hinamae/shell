@@ -1,0 +1,28 @@
+#!/bin/bash
+
+#デフォルトゲートウェイへのネットワーク疎通を確認するもの
+
+
+#routeコマンドの出力からデフォルトゲートウェイを取得
+#カラム1が"0.0.0.0"の行のカラム２を取り出す
+
+
+#route=ルーティングテーブルを表示する
+#-nオプション=現在の経路テーブルの内容をホスト名ではなくIPアドレスで表示する
+#1行目がgateway:の2行目をawkコマンドで取得
+
+gateway=$(route -n get 0.0.0.0  | awk '$1 == "gateway:" {print $2}')
+
+#デフォルトゲートウェイにping実行
+
+ping -c 1 $gateway > /dev/null 2>&1
+
+#pingコマンドの終了ステータスで成功・失敗判断
+
+if [ $? -eq 0 ]; then
+	echo "[Success] ping -> $gateway"
+
+else
+	echo "[Failed] ping -> $gateway"
+
+fi
