@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#ネットワーク内からIPアドレスを検索して、対象の物理アドレスを検索したいとき
+
+ipaddr="192.168.100.1"
+
+#arp=IPアドレスからイーサネットのMACアドレスを取得するプロトコル
+#arp=ARPキャッシュ(arpをやりとりした情報)を操作
+#-aオプション=OSのARPキャッシュをすべて表示
+#-nオプション=名前解決を行わないように指示
+macaddr=$(arp -an | awk "/\($ipaddr\)/ {print \$4}")
+
+
+#-n＝から文字でないかのテスト
+if [ -n "$macaddr" ]; then
+	echo "$ipaddr -> $macaddr"
+else
+	echo "$ipaddr はARPキャッシュにありません"
+fi
+
