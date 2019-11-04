@@ -1,0 +1,33 @@
+#!/bin/bash
+
+
+#指定したIPアドレス宛に複数回pingコマンドを実行し、応答時間の平均を計算して表示する
+
+
+ipaddr="192.168.100.1"
+count=10
+
+
+echo "Ping to : $ipaddr"
+echo "Ping count : $count"
+echo " Ping average[ms]"
+
+#pingコマンドを実行し、結果を一時ファイルに出力
+#$$=プロセスID（bashの特殊変数）
+ping -c $count $ipaddr > ping.$$
+
+#"time=4.32ms"の部分をsedで取り出し、awkで平均値を集計する
+#この先2行は一続きのコマンド
+#長いため\で改行しているだけ
+#sed正規表現に一致した行やら単語やらを削除やら置換やらする
+#sed -n "s/正規表現A /B /p" 正規表現A に一致した行をBに置換
+#^A=Aで始まるもの
+#\(.*\)=.*を見つけたら
+#\1=一つ目の()で囲まれた部分を取り出し
+
+#NR=行数
+sed -n "s/^.*time=\(.*\) ms/\1/p" ping.$$ | \
+awk '{sum+=$1} END{print sum/NR}'
+
+#一時ファイルを削除
+rm -f ping.$$
