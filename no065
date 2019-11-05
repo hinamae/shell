@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#macではftpコマンド使用不可...
+
+#一時ファイルを作成して、FTP転送し、その転送速度を測定する
+
 ＃転送速度を測る一時ファイルのサイズ指定。単位はキロバイト
 filesize=1024
 
@@ -8,6 +12,11 @@ tmpdata="tmpdata.tmp"
 timefile="timecount.tmp"
 
 #転送に用いる一時ファイルを作成する
+#ddコマンド=指定された入力から出力へコピーを行う
+#if=/dev/zero=入力に/dev/zeroという塗るキャラクタが読みだせるスペシャルデバイスを指定
+#of="$filename"=出力にシェル変数filenameで指定されたファイル名を指定
+#count=$filesize=シェル変数filesizaで指定した回数だけコピーをおこなう
+#bs=1024=コピーをおこなうブロックサイズ。ここでは1024バイト
 dd if=/dev/zero of="$tmpdata" count=$filesiza bs=1024 2> /dev/null
 
 #ftp接続してファイルをPUTする
@@ -19,7 +28,11 @@ password="xxxxxxxx"
 echo "Filesize: $filesize (KB)"
 echo "FTP Server:$server"
 
-(time -p ftp -n "$server") << __EOT__ 2 > "$timefile"
+
+#<<__EOT__からヒアドキュメント
+#time=実行時間の計測
+#-pオプション=秒数のみを表示
+(time -p ftp -n "$server") << __EOT__ 2> "$timefile"
 
 user "$user" "$password"
 binary
