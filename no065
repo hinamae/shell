@@ -1,0 +1,35 @@
+#!/bin/bash
+
+＃転送速度を測る一時ファイルのサイズ指定。単位はキロバイト
+filesize=1024
+
+#転送速度を測る一時ファイルのファイル名
+tmpdata="tmpdata.tmp"
+timefile="timecount.tmp"
+
+#転送に用いる一時ファイルを作成する
+dd if=/dev/zero of="$tmpdata" count=$filesiza bs=1024 2> /dev/null
+
+#ftp接続してファイルをPUTする
+server="192.168.100.1"
+user="user1"
+password="xxxxxxxx"
+
+
+echo "Filesize: $filesize (KB)"
+echo "FTP Server:$server"
+
+(time -p ftp -n "$server") << __EOT__ 2 > "$timefile"
+
+user "$user" "$password"
+binary
+put "$tmpdata"
+__EOT__
+
+#timeコマンドの出力結果から実時間を取得し、割り算を行って速度を求める
+realtime=$(awk '/^real / {print $2}' "$timefile")
+speed=$(echo "${filesize}/${realtime}" | bc)
+echo "Transfer Speed: $speed (KB/sec)"
+
+#転送一時ファイルの削除
+rm -f "$tmpdata" "$timefile"
