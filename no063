@@ -1,0 +1,38 @@
+#!/bin/bash
+
+#FTP接続のための設定
+
+server="192.168.100.1"
+
+user="user1"
+
+#ftpプロトコルは古いプロトコル
+#パスワードを平文でやり取りするため、セキュリティ面が甘い
+password="xxxxxxxxx"
+
+dir="/home/user1/myapp/log"
+
+filename="app.log"
+
+#ftpサーバーに自動的にファイルをダウンロード
+#__EOT__
+
+
+
+# << __EOT__でヒアドキュメントを使い始める
+#__EOT__でヒアドキュメントの終了
+#ヒアドキュメントはコマンドの標準入力にそのままリダイレクトされる
+#ftpはそのままオプションなしで打つと、対話モードに入り、シェルスクリプトとしては使い勝手が悪いため、nオプションで抑制している
+
+#ftpコマンドはmacではもう使用できなくなっていた涙
+ftp -n "$server" << __EOT__
+
+user "$user" "$password"
+
+binary
+
+cd "$dir"
+
+get "$filename"
+
+__EOT__
