@@ -1,0 +1,23 @@
+#!/bin/bash
+
+#一時ファイルの作成
+tmpfile="sort.lst"
+
+#対象IDファイルを確認する
+#-fオプション=存在を確認
+if [ ! -f "$1" ]; then
+	#標準エラー出力
+	echo "IDリストファイルを指定してください" >&2
+	exit 1;
+fi
+
+#IDの末尾の数字でリストをソートする
+#rev=文字を逆転するreverse
+#sort=文字を文字順でソート
+rev "$1" | sort | rev > $tmpfile
+
+#末尾ソートされたIDリストでレポートを作成する
+./report.sh $tmpfile
+
+#一時ファイルを削除する
+rm -f $tmpfile
