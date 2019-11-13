@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#CSVファイルを指定
+csvfile="data.csv"
+
+#IDが指定されていなければ終了
+if [ -z "$1" ]; then
+	echo "IDを指定してください" >&2
+	exit 1
+fi
+
+#CSVファイルが存在していなければ終了
+if [ ! -f "$csvfile" ]; then
+	echo "csvファイルが存在しません: $csvfile " >&2
+	exit 1
+fi
+
+while read line
+do
+	#行内の各カラムをcut こまんどでとりだす
+	id=$(echo $line | cut -f 1 -d ',')
+	name=$(echo $line | cut -f 2 -d ',')
+	score=$(echo $line | cut -f 3 -d ',')
+
+	#IDカラムがコマンドライン引数で指定されたIDと一致する場合には名前フィールドを表示する
+	if [ "$1" = "$id" ]; then
+		echo "$name"
+
+	fi
+done < $csvfile
