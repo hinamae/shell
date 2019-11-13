@@ -1,0 +1,28 @@
+#!/bin/bash
+
+filecheck()
+{
+if [ ! -f "$1" ]; then
+	echo "ERROR : file $1 does not exist" >&2
+	exit 1;
+fi
+}
+
+#データCSVファイル名とIDリストファイル名を定義して、ファイルの存在チェックを行う
+csvfile="data.csv"
+idlistfile="$1"
+filecheck "$csvfile"
+filecheck "$idlistfile"
+
+
+#iFSをカンマに設定し、CSVファイルをあつかう
+#区切り文字をカンマに設定したことによって、カンマ区切りの行が分割され、id name scoreがそれぞれシェル変数に代入された
+while IFS=, read id name score
+do
+	#-xオプション＝行全体と完全一致
+	#-qオプション=grepの検索結果を表示しない
+	grep -xq "$id" "$idlistfile"
+	if [ $? -eq 0 ]; then
+		echo $name
+	fi
+done < "$csvfile"
