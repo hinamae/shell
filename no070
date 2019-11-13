@@ -1,0 +1,29 @@
+#!/bin/bash
+
+#太陽スクリプトの存在を確認する
+
+if [ ! -f "$1" ]; then
+
+	echo "指定されたファイルが見つかりません: $1" >&2
+	exit 1
+fi
+
+#ファイルの先頭行を読み出す
+
+headline=$(head -n 1 "$1")
+
+#ファイルの先頭行ごとに拡張子を判定して付加する
+case "$headline" in
+	*/bin/sh|*bash*)
+		mv -v "$1" "${1}.sh"
+		;;
+	*perl*)
+		mv -v "$1" "${1}.pl"
+		;;
+	*ruby*)
+		mv -v "$1" "${1}.rb"
+		;;
+	*)
+		echo "unknown type: $1"
+esac
+
