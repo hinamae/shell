@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#sshdのログファイル
+
+securelog="/var/log/secure"
+
+#IPアドレスを抜き出すためのパターンマッチ
+#長いため変数として格納
+
+pattern="^.*sshd\[.*\]/Failed password for.* from \(.*\) port /*"
+
+#パスワード認証失敗ログからIPアドレスを抽出し、カウントして表示する
+sed -n "s/$pattern/\1/p" "$securelog" | sort | uniq -c | sort -nr
