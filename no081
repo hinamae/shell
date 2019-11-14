@@ -1,0 +1,15 @@
+#!/bin/bash
+
+#検索する文字の定義
+
+search_text="ERROR 19:"
+
+#カレントディレクトリの拡張子.logファイルを順にしょり
+
+for filename in *.log
+do
+	#マッチする行を-cオプションで取得
+	count=$(grep -c "$search_text" "$filename")
+	#printfコマンドで右詰6桁でせいけいして出力する
+	printf "%6s (%s)\n" "$count" "$filename"
+done
