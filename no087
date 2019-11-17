@@ -1,0 +1,23 @@
+#!/bin/bash
+
+
+#このスクリプトを実行途中にps xして、プロセス番号をコピー
+#kill -s USR1 [プロセス番号]
+
+#実行カウンタ
+count=0
+#通信テストの対象サーバ
+server="localhost"
+
+#シグナルUSR1にトラップを設定現在の$count を表示する
+trap 'echo "try count: $count "' USR1
+
+#ncコマンドで連続通信テストのループ
+while [ "$count" -le 1000 ]
+do
+	#カウンタを1増やし、ncコマンドで通信テストを行う
+	#最後に1秒のウェイトを入れる
+	count=$(expr $count + 1)
+	nc  "$server" 80
+	sleep 1
+done
