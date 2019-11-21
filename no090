@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#カレントディレクトリにあるmyappdを実行する
+#myappdを.ではなく、execで実行しているのがミソ
+#.で実行してしまうと、このシェルスクリプトの実行プロセスが、myappdのプロセス終了まで動き続けることになってしまう
+
+
+#TMPDIR環境変数の設定
+
+TMPDIR="$HOME/documents/unix_lessons/test/no090set/tmp"
+export TMPDIR
+
+
+#execコマンドでmyappを実行。コマンドライン引数を"$@"でわたす
+#execで実行すると、新しいプロセスを起動せずに、現行のプロセスに置き換えて実行をおこなう
+#$@＝一パラメータ
+#""で囲うと、""で囲われた物を一つとみなす
+
+exec ./myappd "$@"
