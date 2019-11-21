@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#テスト転送のファイル名、転送先などの定義
+
+#sshユーザー名
+username="user1"
+#.dat=アプリケーション独自の形式で保存されたデータのファイル名の拡張子などによく使われる。“dat”は「データ」（data）の略号
+#.dat=プログラムなどではなく、データを保存していることを示す
+#転送ファイル名
+filename="transfer.dat"
+#転送先のホスト
+hostname="192.168.100.2"
+#転送先パス
+path="/var/tmp"
+#時間計測のための一時ファイル
+tmpfile="timetmp.$$"
+
+
+#scpコマンドでファイルを転送
+#timeコマンドで時間をはかり、一時ファイルに出力する
+(time -p scp -C "$filename" ${username}@${hostname}:"${path}" ) 2> "$tmpfile"
+
+#timeコマンドの出力一時ファイルから各timeを抽出
+realtime=$(awk '/^real / {print $2}'  "$tmpfile")
+usertime=$(awk '/^user / {print $2}'  "$tmpfile")
+systime=$(awk '/^real / {print $2}'  "$tmpfile")
+
+#CPU利用時間から、CPU利用率を計算する
+cpu_percentage=$(echo "scale=2; 100 * ($usertime + $systime) / $realtime" | bc )
+echo "scp転送時間 CPU利用率：　$cpu_percentage(%)"
+
+
+#一時ファイルの削除
+rm -f "$tmpfile"
