@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#中括弧でグルーピングし、複数のコマンドの出力を1:リダイレクトを一つにまとめる
+
+{
+	echo "[Script start]"
+	date
+	ls
+	echo "[Script end]"
+} > output.log
+
+
+#このスクリプトの持つ意味は、以下と同じ意味
+
+#echo "[Script start]" > output.log
+#date >> output.log
+#ls >> output.log
+#echo >> "[script end]"
+
+
