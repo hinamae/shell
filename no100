@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#チェック対象のURL
+url="https://qiita.com/d_nishiyama85/items/a117d59a663cfcdea5e4"
+
+#無限ループを開始
+
+
+#while :=：はヌルコマンドの意味であるので、無限ループという意味
+#while true=無限ループ。trueがシェルのビルトインコマンドで、while :の書き方を好む人もいる
+while true
+do 
+	#curlコマンドでテスト対象のURLからダウンロード
+	#ファイル自体は不要のため、/sev/nullへ捨てる
+	#-o=出力先を指定。今回は/dev/nullが出力先
+	#-s=サイレントモード。余計な出力をへらす
+	#curl -so /dev/null "$url"
+	#ダウンロードを表示させるようにしてみた
+	curl -s "$url"
+
+	#curlコマンドの終了ステータスでOK/NGを判断
+	if [ $? -eq 0 ]; then
+		echo "[check OK]"
+	else
+		echo "[check NG]"
+	fi
+
+	#5秒ウェイト
+	sleep 5
+done
