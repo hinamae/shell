@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#対象のipアドレスの第三オクテットまでを%ADDR_HEAD%に置換する
+
+#コマンドライン引数をチェック
+
+#コマンドライン引数（第一引数）が空でないかのチェック
+if [ -z "$1" ]; then
+	echo "第3オクテットまでのIPアドレスを引数として指定してください" >&2
+	exit 1
+fi
+
+#対象のIPアドレスを外部ファイルping_target.lstから%ADDR_HEAD%の部分を置換して順に取得する
+for ipaddr in $(sed "s/%ADDR_HEAD%/$1/" ping_target.lst)
+do
+
+	#pingコマンドを実行。出力結果は不要のため/dev/nullへリダイレクト
+	ping -c 1 $ipaddr > /dev/null 2>&1
+
+	#終了ステータスで成功失敗を表示
+	if [ $? -eq 0 ]; then
+		echo "[sucess] ping -> $ipaddr"
+	else
+		echo "[failed] ping -> $ipaddr"
+	fi
+done
