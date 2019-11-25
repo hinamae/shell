@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#抽出条件などの定義
+
+#抽出するIDの定義
+match_id=1
+
+#csvファイルを指定
+csvfile="data.csv"
+
+#csvファイルが存在しなければ終了
+
+if [ ! -f "$csvfile" ]; then
+	echo "csvファイルが存在しません:$csvfile >&2"
+	exit 1
+fi
+
+#csvファイルの読み込み
+while read line
+do
+	#各行の各カラムをcutコマンドで取り出す
+	id=$(echo $line | cut -f 1 -d ',' )
+	name=$(echo $line | cut -f 2 -d ',')
+
+	#IDカラムが、シェル変数match_idで指定されたIDと一致する場合には名前フィールドを表示する
+	if [ "$id" -eq "$match_id" ]; then
+		echo "$name"
+	fi
+
+done < "$csvfile"
