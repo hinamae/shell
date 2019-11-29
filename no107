@@ -1,0 +1,43 @@
+#!/bin/bash
+
+
+#システムのシャットダウンをおこなう
+#自分以外のユーザがログインしていないかをehoコマンドの出力からチェックする
+
+other_user=$(who | wc -l)
+
+if [ "$other_user" -ge 10 ]; then
+	echo "[ERROR] whoコマンドの出力が2行以上：作業中のユーザがいます" >&2
+	exit 1
+fi
+
+#事前に停止しておくべきプロセスが起動したままでないかをチェックする
+commname="/usr/libexec/mysqld"
+
+#-oオプション＝表示項目を選択できる
+#コマンドのみ表示している
+
+ps ax -o command | grep -q "^$commname"
+if [ $? -eq 0 ]; then
+	echo "[ERROR]シャットダウンを中止:プロセス $commname が起動中" >&2
+	exit 2
+fi
+
+
+
+echo "シャットダウンしますか？"
+
+read ans
+
+case "$ans" in
+	[yY])
+		#シャットダウンを実行
+		sudo shutdown -h  now
+		;;
+	[nN])
+		exit 0
+		;;
+	*)
+		echo "もう一度入力してください"
+		;;
+esac
