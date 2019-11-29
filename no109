@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#centos限定（redhatもいける？）
+#rpmパッケージがインストールもしくは更新された日付を一覧表示
+
+
+#指定されたリストファイルの存在チェック
+if [ ! -f "$1" ]; then
+	echo "対象のパッケージリストファイルが存在しません: $1" >&2
+	exit 1
+fi
+
+#引数で指定されたファイルからパッケージリストを取得
+pkglist=$(cat "$1")
+
+
+#インストール済みrpmの更新日付を出力する
+rpm -q $pkglist --queryformat '%{INSTALLTIME:date} : %{NAME}\n'
