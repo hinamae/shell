@@ -1,0 +1,17 @@
+#!/bin/bash
+
+#監視するプロセスのコマンドとプロセス本数閾値
+
+commname="$HOME/documents/unix_lessons/test/no112set"
+threshold=3
+
+#プロセスの本数をカウントする
+count=$(ps ax -o command | grep "$commname" | grep -v "^grep" | wc -l)
+
+#プロセス本数が閾値以上ならば警告処理を行う
+if [ "$count" -ge "$threshold" ]; then
+	echo "[ERRPR] プロセス $commname が多重起動 ($count) " >&2
+	$HOME/documents/unix_lessons/test/no112set/alert.sh
+fi
+	
+
