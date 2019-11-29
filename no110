@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+#インストールするパッケージ名の定義
+pkglist="httpd git xz"
+
+#パッケージリストから順に1行ずつ読み込み
+for pkg in $pkglist
+do
+	#yumコマンドでパッケージをインストールする
+	yum -y install $pkg
+done
