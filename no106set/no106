@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#このスクリプトの実行を許可するユーザの定義
+script_users="hina"
+
+#idコマンドで現在のユーザを取得し、定義と一致するか確認
+
+#idコマンド＝ユーザ情報を表示
+#-nuオプション=ユーザの名前を表示
+#-uオプション=ユーザのid番号を表示
+
+if [ $(id -nu) = "$script_users" ]; then
+	#許可ユーザならばバッチ処理を実行
+	./batch_program
+else
+	echo "[ERROR] $scritpt_users ユーザで実行してください" >&2
+
+	exit 1
+
+fi
+
