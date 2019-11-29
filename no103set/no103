@@ -1,0 +1,23 @@
+#/bin/bash
+
+#ダウンロードするファイルのURLのパス部分ファイル名を定義
+url_path="http://www.line-tatsujin.com/list/tt_kosei/"
+
+#datファイルはdataが入ったファイル
+filename="popular_1.html"
+
+#ファイルをダウンロード。ダウンロード成功ならばmd5ハッシュ値を表示する
+
+#curl＝http,https通信してくれる
+#sオプション＝サイレントモード
+#oオプション=アウトプットをファイルに指定
+
+#&&=これを挟んでおくと、例えばA&&Bでは、Aが成功した場合のみBが実行される
+
+#md5=ハッシュ値を取得
+curl -sO "${url_path}${filename}" && md5 "$filename"
+
+#ダウンロードファイルを削除して終了する
+rm -f "$filename"
+
+
