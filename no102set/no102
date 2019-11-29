@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#データのファイルの定義
+
+datafile="$HOME/documents/unix_lessons/test/no102set/sample.dat"
+
+#データファイルの存在チェック
+if [ -f "$datafile" ]; then
+	#仕様変更で不要となったためコメントアウトしたものとする
+	#./myapp "$datafile"
+
+	#シェルスクリプトでは、からのif文はエラーとなってしまう
+	#if文のなかに少なくとも一つのコマンドが必要
+	#からのif文がかけないため、ヌルコマンド(:)を置いておく
+	:
+
+else
+	#標準エラー出力で出力
+	echo "データファイルが存在しません: $datafile" >&2
+	exit 1
+fi
