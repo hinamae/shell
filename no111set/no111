@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#監視するプロセスのコマンド
+commname="/usr/libexec/mysqld"
+
+#対象のコマンドのプロセス数をカウントする
+count=$(ps ax -o command | grep "$commname" | grep -v "^grep" | wc -l)
+
+#grepコマンドの出力結果が0行の場合にはプロセスが存在しないため、監視通知処理を行う
+
+if [ "$count" -eq 0 ]; then
+	echo "[ERROR] プロセス $comnameが見つかりません" >&2
+	$HOME/documents/unix_lessons/test/no111set/alert.sh
+fi
