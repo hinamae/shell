@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#メモリ・スワップ監視を行う
+
+swapcount_limit=10
+
+#vmstatコマンドの出力からスワップイン・スワップアウト値を取得する
+#-cオプション＝計算回数
+#インターバルはコマンドライン引数の一つ目に指定。今回は1
+
+
+swapcount=$(vm_stat -c  3 1 | awk 'NR >=4 {sum += $21 + $22} END{print sum}')
+
+#スワップ回数が閾値を超えていれば警告
+if [ "$swapcount" -ge "$swapcount_limit" ] ; then
+	#現在日付をいい感じのフォーマット表示する
+	date_str=$(date '+%Y/%m/%d %H:%M:%S')
+
+	#スワップ発生の警告出力
+	echo "[$date_str] Swap Alert: $swapcount (si+so)"
+	$HOME/documents/unix_lessons/test/no117set/alert.sh
+fi
