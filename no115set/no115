@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#監視対象URLを指定する
+url="http://www.line-tatsujin.com/list/tt_kosei/popular_1.html"
+
+#現在日付をいい感じのフォーマット表示
+date_str=$(date '+%Y/%m/%d %H:%M:%S')
+
+#監視URLにcurlコマンドでアクセスし、終了ステータスをcurlresultに代入
+httpstatus=$(curl -s "$url" -o /dev/null -w "%{http_code}")
+curlresult=$?
+
+#curlコマンドが失敗していればHTTP接続自体が異常とみなす
+if [ "$curlresult" -ne 0 ]; then
+	echo "[$date_str] HTTP 接続異常:curl exit status[$curlresult]"
+	$HOME/documents/unix_lessons/test/no115set/alert.sh
+	
+#400番台、500番台のHTTPステータスコードならばエラーとみなして警告
+elif  [ "$httpstatus"  -ge 400 ]; then	
+	echo "[$date_str] HTTP 接続異常:curl exit status[$curlresult]"
+	$HOME/documents/unix_lessons/test/no115set/alert.sh
+fi
