@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#指定されたIDファイルから、「$id $status」として一行ずつreadコマンドで読み込む
+while read id status
+do
+
+	#シェル変数idの先頭2文字が"AC"かをチェックする
+	#${id:0:2}という書き方で先頭2文字という意味になる
+	if [ "${id:0:2}" = "AC" ]; then
+		echo "$id $status"
+	fi
+done < "$1"
