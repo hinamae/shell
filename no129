@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#比較する2つのディレクトリの定義
+dir1="$HOME/documents/unix_lessons/test"
+dir2="$HOME/documents/unix_lessons/test1"
+
+#commコマンドで出力を比較。中間ファイルを作成しなくてもプロセス置換で処理できる
+#()でかこまれたものは、その()の中のコマンドの出力結果をファイルをみなして、commが実行される
+comm <(ls "$dir1") <(ls "$dir2")
