@@ -1,0 +1,14 @@
+#!/bin/bash
+
+#テスト通信先の定義
+ipaddr="192.168.100.1"
+port=80
+
+
+#1から10までの整数値の乱数をRANDOM変数から取得する
+waittime=$((RANDOM % 10 + 1))
+
+#テストコマンドをウェイトを入れて2回実行するnc -w 5 -zv $ipaddr $port
+echo "Wait:  $waittime sec. "
+sleep $waittime
+nc -w 5-zv $ipaddr $port
