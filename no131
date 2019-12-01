@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#メニュープロンプト文の定義
+PS3='Menu: '
+
+#メニュー表示の定義　メニューの各項目はinはのリストとして指定する
+#$itemには選択されたリストの文字列が、$REPLYには入力された整数値が代入される
+select item in "list file" "current directory" "exit"
+do
+
+	case "$REPLY" in
+		1)
+			ls
+			;;
+		2)
+			pwd
+			;;
+		3)
+			exit
+			;;
+		*)
+			echo "ERROR: unknown command"
+			;;
+	esac
+
+	echo
+done
