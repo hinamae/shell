@@ -1,0 +1,21 @@
+#!/bin/bash
+
+#以下のような処理を行うケースを想定する
+# script.sh :データ出力
+# sort-data.sh :データをソートする
+# calc.sh : 出力データの計算をする
+./script.sh | ./sort-data.sh | ./calc.sh > output.txt
+
+#別のコマンドを実行するとPIPESTATUSの値が失われるため結果をコピーしておく
+#PIPESTATUS=bashの組み込み変数
+#この場合PIPESTATUS[1]=./script.shの終了ステータス
+#この場合PIPESTATUS[2]=./calc.shの終了ステータス
+#この場合PIPESTATUS[3]=./output.shの終了ステータス
+pipe_status=("${PIPESTATUS[@]}")
+
+#パイプ処理中の途中のコマンドの成功失敗チェック
+#sort-dat.shの終了ステータスが非ゼロか確認する
+if [[ "${pipr_status[1]}" -ne 0 ]]; then
+	echo "[error] sort-data.sh は失敗しました" >&2
+fi
+	
